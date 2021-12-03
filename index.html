@@ -1,56 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="icon" href="img/dragao_DzP_icon.ico">
-
-    <title>Document</title>
-</head>
-
-
-<!--   ****** BODY DOM  ******* -->
-<body>
-
-    <h2>Exemplo H2</h2>
-    
-    <a href="contact.html" target="_parent" accesskey="h">Contact</a>
-
-    <br><br>
-
-    <table>
-        <tr>
-            <th colspan="3">Name</th>
-        </tr>
-        <tr>
-            <td>Rodrigo</td>
-            <td>Porto</td>
-            <td>p6288@ulp.pt</td>
-        </tr>
-    </table>
-
-    <br>
-
-    <ol type="1" start="3">
-        <li>Apple</li>
-        <li>Pineapple</li>
-        <li>Watermelon</li>
-    </ol>
-
-    <dl>
-        <dt>Coffee</dt>
-        <dd>Brazilian Coffee</dd>
-        <dt>Wine</dt>
-        <dd>Portuguese Wine</dd>
-    </dl>
-
-    
-
-
-
-</body>
- 
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>BotUI - Hello World with HTML</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/botui/build/botui.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/botui/build/botui-theme-default.css" />
+    <meta name="description" content="A hello world bot with HTML in content. A conversational UI built using BotUI.">
+  </head>
+  <body>
+    <div class="botui-app-container" id="hello-world">
+      <bot-ui></bot-ui>
+    </div>
+    <script src="https://cdn.jsdelivr.net/vue/2.0.5/vue.min.js"></script>
+    <script src="https://unpkg.com/botui/build/botui.js"></script>
+    <script src="./hello-world.js"></script>
+  </body>
 </html>
