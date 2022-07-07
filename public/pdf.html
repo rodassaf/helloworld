@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My PDF Viewer</title>
   <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js">
+    src="http://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js">
   </script>
  
   <style>
@@ -17,7 +17,7 @@
       }
  
       #canvas_container {
-        background: #333;
+        background: rgb(195, 195, 195);
         text-align: center;
         border: solid 3px;
       }
@@ -49,7 +49,7 @@
         }
       
         pdfjsLib.getDocument('rodrigo.pdf').then((pdf) => {
-      
+            //console.log(pdf)
             myState.pdf = pdf;
             render();
  

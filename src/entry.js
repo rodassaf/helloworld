@@ -90,22 +90,22 @@ function onPointerMove( event ) {
   raycaster.setFromCamera( pointer, camera );
 
   // calculate objects intersecting the picking ray
-const intersects = raycaster.intersectObjects( scene.children );
-for ( let i = 0; i < intersects.length; i ++ ) {
-  if (intersects[ i ].object.name === 'poipaper_1') {
-    readpdf.visible = true;
-    closebutton.visible = true;
-  }
-  if (intersects[ i ].object.name === 'close_2') {
-    readpdf.visible = false;
-    closebutton.visible = false;
-  }
+  const intersects = raycaster.intersectObjects( scene.children );
+  console.log(intersects)
+  for ( let i = 0; i < intersects.length; i ++ ) {
 
-  
-  console.log(intersects[ i ].object.name)
-//  intersects[ i ].object.material.color.set( 0xff0000 );
-
-}
+    if (intersects[ i ].object.name === 'poipaper_1') {
+      readpdf.visible = true;
+      closebutton.visible = true;
+    }
+    if (intersects[ i ].object.name === 'close_2') {
+      readpdf.visible = false;
+      closebutton.visible = false;
+    }
+    if (intersects[ i ].object.name === 'readbutton_2') {
+      document.getElementById("container").style.visibility = "visible";
+    }
+  }
 }
 
 
@@ -122,9 +122,7 @@ function render() {
       
       // The Zappar camera must have updateFrame called every frame
       camera.updateFrame(renderer);
-      
 
-    
       // Draw the ThreeJS scene in the usual way, but using the Zappar camera
       renderer.render(scene, camera);
     
@@ -142,3 +140,68 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
 }
+
+
+//PDF READER ***********************************************************
+var myState = {
+  pdf: null,
+  currentPage: 1,
+  zoom: 1.3
+}
+
+pdfjsLib.getDocument('rodrigo.pdf').then((pdf) => {
+  //console.log(pdf)
+  myState.pdf = pdf;
+  renderpdf();
+
+});
+
+function renderpdf() {
+  myState.pdf.getPage(myState.currentPage).then((page) => {
+
+      var canvas = document.getElementById("pdf_renderer");
+      var ctx = canvas.getContext('2d');
+
+      var viewport = page.getViewport(myState.zoom);
+
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      page.render({
+          canvasContext: ctx,
+          viewport: viewport
+      });
+  });
+}
+
+document.getElementById('buttonup').addEventListener('click', (e) => {
+  if(myState.pdf == null || myState.currentPage == 1) 
+    return;
+  myState.currentPage -= 1;
+  document.getElementById("page").innerHTML = "Page "+ myState.currentPage
+  renderpdf();
+});
+
+document.getElementById('buttondwn').addEventListener('click', (e) => {
+  if(myState.pdf == null || myState.currentPage > myState.pdf._pdfInfo.numPages-1) 
+     return;
+  myState.currentPage += 1;
+  document.getElementById("page").innerHTML = "Page "+ myState.currentPage
+  renderpdf();
+});
+
+document.getElementById('zoomin').addEventListener('click', (e) => {
+  if(myState.pdf == null) return;
+  myState.zoom += 0.5;
+  renderpdf();
+});
+
+document.getElementById('zoomout').addEventListener('click', (e) => {
+  if(myState.pdf == null) return;
+  myState.zoom -= 0.5;
+  renderpdf();
+});
+
+document.getElementById('close').addEventListener('click', (e) => {
+  document.getElementById("container").style.visibility = "hidden";
+});
